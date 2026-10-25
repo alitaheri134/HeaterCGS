@@ -5,16 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پایش و محاسبات پیشرفته گرمکن (IGS-O-CH-055)</title>
     
-    <!-- فونت پشتیبان آنلاین -->
-    
-
-    <!-- 
-      نکته: اگر می‌خواهید فونت آفلاین (Base64) سایت استانداردها را هم داشته باشید، 
-      تگ <style> اول کد خودتان (که شامل @font-face است) را دقیقاً در همین نقطه کپی کنید.
-    -->
-    
-    
-        <style>
+    <style>
         @font-face {
             font-family: 'IRANSansX-Bold';
             font-weight: 400;
@@ -25,11 +16,7 @@
             font-weight: 400;
             font-style: normal;
         }
-    </style>
-    
-
-    <style>
-        /* اعمال فونت و ضخامت (Bold) سراسری دقیقاً مشابه سایت جستجوی استانداردها */
+        
         * {
             margin: 0;
             padding: 0;
@@ -63,68 +50,15 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); 
         }
 
-        .header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border-bottom: 2px solid #e6edf4;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-        }
-        .header-top {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-        .company-logo {
-            width: auto;
-            height: auto;
-            max-width: 100%;
-            border-radius: 16px;
-            background: transparent;
-            padding: 0;
-            box-shadow: none;
-            display: block;
-        }
-        .date-row {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            font-size: 0.9rem;
-            color: #3a6a8e;
-            margin-top: 8px;
-            flex-wrap: wrap;
-            background: #f9fcff;
-            padding: 6px 20px;
-            border-radius: 40px;
-            border: 1px solid #e2ebf3;
-            font-weight: 800 !important;
-        }
-        .date-row .item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .date-row .item .label {
-            font-weight: 700 !important;
-            color: #5f7f9a;
-        }
-        .date-row .item .value {
-            font-weight: 800 !important;
-            color: #003c5e;
-            font-size: 0.9rem;
-        }
-        .footer {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #e6edf4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #7f96aa;
-            font-size: 0.9rem;
-        }
+        .header { display: flex; flex-direction: column; align-items: center; border-bottom: 2px solid #e6edf4; padding-bottom: 20px; margin-bottom: 20px; }
+        .header-top { display: flex; align-items: center; justify-content: center; width: 100%; }
+        .company-logo { width: auto; height: auto; max-width: 100%; border-radius: 16px; background: transparent; padding: 0; box-shadow: none; display: block; }
+        .date-row { display: flex; justify-content: center; gap: 20px; font-size: 0.9rem; color: #3a6a8e; margin-top: 8px; flex-wrap: wrap; background: #f9fcff; padding: 6px 20px; border-radius: 40px; border: 1px solid #e2ebf3; font-weight: 800 !important; }
+        .date-row .item { display: flex; align-items: center; gap: 4px; }
+        .date-row .item .label { font-weight: 700 !important; color: #5f7f9a; }
+        .date-row .item .value { font-weight: 800 !important; color: #003c5e; font-size: 0.9rem; }
+        
+        .footer { margin-top: 30px; padding-top: 20px; border-top: 2px solid #e6edf4; display: flex; justify-content: center; align-items: center; color: #7f96aa; font-size: 0.9rem; }
 
         h1, h2 { text-align: center; color: #003c5e; border-bottom: 3px solid #3498db; padding-bottom: 15px; margin-bottom: 25px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -132,21 +66,10 @@
         .input-group { background: #f9fcff; padding: 15px; border-radius: 14px; border: 1px solid #e2ebf3; }
         label { display: block; margin-bottom: 8px; color: #1e2b3a; font-size: 0.95rem; font-weight: 800 !important; }
         
-        input, select { 
-            width: 100%; 
-            padding: 10px 12px; 
-            border: 1px solid #d0dde9; 
-            border-radius: 10px; 
-            font-size: 15px; 
-            background-color: #fff; 
-            color: #1e2b3a;
-            font-weight: 800 !important;
-            transition: 0.2s;
-        }
+        input, select { width: 100%; padding: 10px 12px; border: 1px solid #d0dde9; border-radius: 10px; font-size: 15px; background-color: #fff; color: #1e2b3a; font-weight: 800 !important; transition: 0.2s; }
         input:focus, select:focus { outline: none; border-color: #2b7a4b; box-shadow: 0 0 0 3px rgba(43, 122, 75, 0.15); }
         input::placeholder { color: #a0b8cd; font-weight: 600 !important; }
-        input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number] { -moz-appearance: textfield; }
 
         .btn-container { text-align: center; margin-top: 30px; }
@@ -157,7 +80,6 @@
         .btn-print { background: linear-gradient(135deg, #2980b9 0%, #8e44ad 100%); color: white; }
         .btn-clear { background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); color: white; }
 
-        /* استایل‌های بولد و خوانا برای گزارش خروجی */
         #results { margin-top: 40px; padding: 25px; border-radius: 18px; display: none; background: #fff; border: 2px solid #e2ebf3; }
         .result-card { border-radius: 14px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2ebf3; }
         .alert-card { border-right: 8px solid #d32f2f; background-color: #fff5f5; }
@@ -169,8 +91,6 @@
         
         .content-split { display: flex; flex-wrap: wrap; padding: 18px 20px; gap: 15px; align-items: center; }
         .params-right { flex: 1; min-width: 250px; direction: rtl; text-align: right; padding-left: 20px; border-left: 2px dashed #ef9a9a; font-size: 15.5px; color: #1e2b3a; font-weight: 800 !important; line-height: 1.9; }
-        
-        /* تغییر فونت فرمول‌ها از Courier نازک به فونت اصلی ضخیم و خوانا */
         .formula-left { flex: 1.5; min-width: 320px; direction: ltr; text-align: left; padding-right: 15px; font-size: 16.5px; font-weight: 800 !important; color: #b71c1c; display: flex; flex-direction: column; justify-content: center; }
         .formula-line { white-space: nowrap; overflow-x: auto; margin-bottom: 10px; background: #ffffff; padding: 10px 14px; border-radius: 8px; border: 1.5px solid #ef9a9a; font-weight: 800 !important; color: #1e2b3a; }
         .formula-result { background: #ffebee; border: 2px solid #d32f2f; color: #b71c1c; padding: 10px 16px; border-radius: 8px; display: inline-block; font-weight: 900 !important; font-size: 18px; }
@@ -194,12 +114,7 @@
             .params-right { border-left: none; border-bottom: 2px dashed #ef9a9a; padding-left: 0; padding-bottom: 15px; }
         }
         @media (max-width: 500px) { .grid-4 { grid-template-columns: 1fr; } .grid { grid-template-columns: 1fr; } }
-        @media print {
-            button { display: none; }
-            body { background: white; color: black; }
-            .container { box-shadow: none; border: none; padding: 0; }
-            .result-card { break-inside: avoid; border: 1px solid #ccc; }
-        }
+        @media print { button { display: none; } body { background: white; color: black; } .container { box-shadow: none; border: none; padding: 0; } .result-card { break-inside: avoid; border: 1px solid #ccc; } }
     </style>
 </head>
 <body>
@@ -347,9 +262,7 @@
             if (typeof heaterData === 'undefined') return;
             const uniqueCounties = [...new Set(heaterData.map(item => item.county))];
             let options = '<option value="">-- انتخاب کنید --</option>';
-            uniqueCounties.forEach(c => {
-                options += `<option value="${c}">${c}</option>`;
-            });
+            uniqueCounties.forEach(c => { options += `<option value="${c}">${c}</option>`; });
             options += '<option value="OTHER">➕ سایر (تایپ دستی)...</option>';
             countySel.innerHTML = options;
         }
@@ -361,9 +274,7 @@
             if (countyFilter && countyFilter !== "OTHER") {
                 filtered = heaterData.filter(item => item.county === countyFilter);
             }
-            filtered.forEach(s => {
-                options += `<option value="${s.station}">${s.station}</option>`;
-            });
+            filtered.forEach(s => { options += `<option value="${s.station}">${s.station}</option>`; });
             options += '<option value="OTHER">➕ سایر (تایپ دستی)...</option>';
             stationSel.innerHTML = options;
         }
@@ -505,34 +416,28 @@
             let is_critical = false;
             let critical_reasons = [];
 
-           // 1. محاسبات مجزای ضدیخ (MEG) - مبنا: محدوده مجاز (0 تا 50) و مقایسه با مقدار هدف (target_meg)
+           // 1. محاسبات مجزای ضدیخ (MEG)
             if(meg !== null) {
                 hasData = true;
-                // بررسی قرار داشتن در محدوده مجاز استاندارد (0 تا 50 درصد)
                 if(meg >= 0 && meg <= 50) {
-                    // بررسی انطباق با درصد هدف کاربر
                     if(meg === target_meg) {
                         rep.innerHTML += createNormalCard("درصد ضدیخ فعلی (MEG)", meg, "% (مطابق با درصد هدف)");
                     } else if(meg < target_meg) {
-                        // اگر ضدیخ کمتر از مقدار هدف باشد، نیاز به تزریق ضدیخ خالص است
                         d_meg = (v * (target_meg - meg)) / (100 - meg);
-                        if (d_meg > max_drain_imp) { max_drain_imp = d_meg; drain_reason.push("تنظیم غلظت ضدیخ"); }
-                        
-                        let params = `V = ${v} لیتر<br>C<sub>current</sub> = ${meg} %<br>C<sub>target</sub> (هدف) = ${target_meg} %<br>C<sub>fresh</sub> = 100 %`;
+                        if (d_meg > max_drain_imp) { max_drain_imp = d_meg; drain_reason.push("کمبود غلظت ضدیخ"); }
+                        let params = `V = ${v} لیتر<br>C<sub>current</sub> = ${meg} %<br>C<sub>target</sub> = ${target_meg} %<br>C<sub>fresh</sub> = 100 %`;
                         let formula = `
                             <div class="formula-line">d = V * (C<sub>target</sub> - C<sub>current</sub>) / (100 - C<sub>current</sub>)</div>
                             <div class="formula-line">d = ${v} * (${target_meg} - ${meg}) / (100 - ${meg})</div>
                             <div class="formula-result">d = ${Math.round(d_meg)} Liters</div>
                         `;
-                        rep.innerHTML += createAlertCard("درصد ضدیخ (MEG)", meg, "%", params, formula, `برای رسیدن به درصد ضدیخ هدف (${target_meg}٪)، نیاز به تخلیه و تزریق ${Math.round(d_meg)} لیتر ضدیخ خالص است.`);
+                        rep.innerHTML += createAlertCard("درصد ضدیخ (MEG)", meg, "%", params, formula, `برای رسیدن به هدف (${target_meg}٪)، نیاز به تخلیه و تزریق ${Math.round(d_meg)} لیتر ضدیخ است.`);
                     } else {
-                        // اگر ضدیخ بالاتر از مقدار هدف بود ولی هنوز زیر 50٪ است
-                        rep.innerHTML += createNormalCard("درصد ضدیخ فعلی (MEG)", meg, "% (بالاتر از هدف ولی در محدوده مجاز استاندارد)");
+                        rep.innerHTML += createNormalCard("درصد ضدیخ فعلی (MEG)", meg, "% (بالاتر از هدف ولی در محدوده مجاز)");
                     }
                 } else if (meg < 0) {
                     rep.innerHTML += createSimpleAlertCard("درصد ضدیخ فعلی (MEG)", meg, "%", "کمتر از 0%", "مقدار نامعتبر است");
                 } else {
-                    // اگر بالاتر از 50 درصد باشد (خارج از محدوده مجاز استاندارد جدول 3)
                     d_meg = (v * (meg - target_meg)) / meg; 
                     let params = `V = ${v} لیتر<br>C<sub>current</sub> = ${meg} %<br>C<sub>target</sub> = ${target_meg} %`;
                     let formula = `
@@ -540,26 +445,25 @@
                         <div class="formula-line">d = ${v} * (${meg} - ${target_meg}) / ${meg}</div>
                         <div class="formula-result">d = ${Math.round(d_meg)} Liters</div>
                     `;
-                    rep.innerHTML += createAlertCard("درصد ضدیخ (MEG)", meg, "% (خارج از حد مجاز استاندارد بالا)", params, formula, `مقدار ضدیخ بالاتر از حد مجاز ۵۰٪ است؛ نیاز به تخلیه ${Math.round(d_meg)} لیتر و رقیق‌سازی با آب دمین است.`);
-                    drain_reason.push("رقیق‌سازی ضدیخ");
+                    rep.innerHTML += createAlertCard("درصد ضدیخ (MEG)", meg, "% (خارج از محدوده مجاز بالا)", params, formula, `بیشتر از حد مجاز ۵۰٪؛ نیاز به تخلیه ${Math.round(d_meg)} لیتر و رقیق‌سازی با آب دمین.`);
                 }
             }
 
-            // 2. محاسبات مجزای پی‌اچ (pH) - رنج مجاز جدید: 7 تا 10.5
+            // 2. پی‌اچ (pH)
             if(ph !== null) {
                 hasData = true;
                 if(ph >= 7 && ph <= 10.5) {
                     rep.innerHTML += createNormalCard("پی‌اچ (pH)", ph, "");
                 } else {
                     let z = (ph < 7) ? 7 : 10.5;
-                    let x = 8.75; // میانگین بازه مجاز برای محلول تازه
+                    let x = 8.75; 
                     let num = Math.pow(10, -z) - Math.pow(10, -ph);
                     let den = Math.pow(10, -x) - Math.pow(10, -ph);
                     if (den !== 0) d_ph = Math.abs(v * (num / den));
                     if (d_ph > v) d_ph = v;
-                    if (d_ph > max_drain_imp) { max_drain_imp = d_ph; drain_reason.push("تنظیم pH"); }
+                    if (d_ph > max_drain_imp) { max_drain_imp = d_ph; drain_reason.push("اصلاح pH"); }
 
-                    let params = `V = ${v} لیتر<br>y (pH فعلی) = ${ph}<br>z (pH هدف مجاز) = ${z}<br>x (pH محلول تازه) = ${x}`;
+                    let params = `V = ${v} لیتر<br>y (pH فعلی) = ${ph}<br>z (هدف مجاز) = ${z}<br>x (محلول تازه) = ${x}`;
                     let formula = `
                         <div class="formula-line">d = V * (10<sup>-z</sup> - 10<sup>-y</sup>) / (10<sup>-x</sup> - 10<sup>-y</sup>)</div>
                         <div class="formula-line">d = ${v} * (10<sup>-${z}</sup> - 10<sup>-${ph}</sup>) / (10<sup>-${x}</sup> - 10<sup>-${ph}</sup>)</div>
@@ -569,7 +473,7 @@
                 }
             }
 
-            // 3. محاسبات مجزای جامدات محلول (TDS) - رنج مجاز جدید: حداکثر 2000 ppm
+            // 3. جامدات محلول (TDS)
             if(tds !== null) {
                 hasData = true;
                 if(tds <= 2000) {
@@ -581,7 +485,7 @@
                     if (d_tds > v) d_tds = v;
                     if (d_tds > max_drain_imp) { max_drain_imp = d_tds; drain_reason.push("کاهش TDS"); }
 
-                    let params = `V = ${v} لیتر<br>y (TDS فعلی) = ${tds} ppm<br>x (حد مجاز) = ${x} ppm<br>y' (محلول تازه) = ${y_prime} ppm`;
+                    let params = `V = ${v} لیتر<br>y (فعلی) = ${tds} ppm<br>x (مجاز) = ${x} ppm<br>y' (تازه) = ${y_prime} ppm`;
                     let formula = `
                         <div class="formula-line">V<sub>1</sub> = V * (y - x) / (y - y')</div>
                         <div class="formula-line">V<sub>1</sub> = ${v} * (${tds} - ${x}) / (${tds} - ${y_prime})</div>
@@ -591,7 +495,7 @@
                 }
             }
 
-            // 4. محاسبات مجزای هدایت الکتریکی (EC) - رنج مجاز جدید: حداکثر 6000 µS/cm
+            // 4. هدایت الکتریکی (EC)
             if(ec !== null) {
                 hasData = true;
                 if(ec <= 6000) {
@@ -603,7 +507,7 @@
                     if (d_ec > v) d_ec = v;
                     if (d_ec > max_drain_imp) { max_drain_imp = d_ec; drain_reason.push("کاهش EC"); }
 
-                    let params = `V = ${v} لیتر<br>y (EC فعلی) = ${ec} µS/cm<br>x (حد مجاز) = ${x} µS/cm<br>y' (محلول تازه) = ${y_prime} µS/cm`;
+                    let params = `V = ${v} لیتر<br>y (فعلی) = ${ec} µS/cm<br>x (مجاز) = ${x} µS/cm<br>y' (تازه) = ${y_prime} µS/cm`;
                     let formula = `
                         <div class="formula-line">V<sub>1</sub> = V * (y - x) / (y - y')</div>
                         <div class="formula-line">V<sub>1</sub> = ${v} * (${ec} - ${x}) / (${ec} - ${y_prime})</div>
@@ -613,7 +517,7 @@
                 }
             }
 
-            // 5-9. سایر پارامترها (آهن کل با حد مجاز 0.3 و یون کلراید با حد مجاز 300)
+            // 5-9. سایر پارامترها
             if(iron !== null) { hasData = true;
                 if(iron <= 0.3) { rep.innerHTML += createNormalCard("آهن کل", iron, "mg/l"); }
                 else { rep.innerHTML += createSimpleAlertCard("آهن کل", iron, "mg/l", "بیشتر از 0.3", "نشانه خوردگی داخلی مخزن"); is_critical = true; critical_reasons.push("آهن کل بالا"); }
@@ -640,15 +544,18 @@
                 rep.innerHTML += createNormalCard("سطح سیال", "نرمال", "");
             }
 
-        // محاسبات یکپارچه ضدیخ در صورت نیاز به افزودن یا رقیق‌سازی
+            // محاسبات یکپارچه ضدیخ جهت تجمیع نهایی (این بخش اصلیِ رفع باگ است)
             let current_meg = meg !== null ? meg : 0;
             let min_drain_meg = 0;
             
             if (current_meg < target_meg) {
                 min_drain_meg = (v * (target_meg - current_meg)) / (100 - current_meg);
             } else if (current_meg > 50) {
-                // اگر ضدیخ بیشتر از حد مجاز 50% باشد، باید رقیق شود
+                // محاسبه حجم تخلیه برای رقیق‌سازی ضدیخ بالای 50 درصد
                 min_drain_meg = (v * (current_meg - target_meg)) / current_meg;
+                if (!drain_reason.includes("رقیق‌سازی ضدیخ")) {
+                    drain_reason.push("رقیق‌سازی ضدیخ");
+                }
             } else {
                 min_drain_meg = 0;
             }
@@ -667,10 +574,10 @@
 
             if (final_drain > (v * 0.6)) {
                 is_critical = true;
-                critical_reasons.push("نیاز به تخلیه بیش از 60 درصد حجم");
+                critical_reasons.push("نیاز به تخلیه بیش از 60 درصد حجم کل");
             }
 
-            // کادر نتیجه‌گیری نهایی با تشریح منطق
+            // کادر نتیجه‌گیری نهایی با اصلاح متون
             if (hasData) {
                 let summaryHTML = `<div class="summary-box">
                     <h3>📋 نتیجه‌گیری نهایی و راهنمای عملیاتی یکپارچه</h3>`;
@@ -685,21 +592,23 @@
                         summaryHTML += `<p style="color: #b71c1c; background: #ffcdd2; padding: 12px; border-radius: 8px;">⚠️ پیش از شارژ محلول جدید، انجام کامل عملیات میکروب‌زدایی مطابق با پیوست (ت) الزامی است.</p>`;
                     }
                 } else if (final_drain > 0) {
+                    let meg_text = Math.round(meg_add) > 0 ? `<strong>${Math.round(meg_add)} لیتر ضدیخ خالص</strong>` : `<strong>هیچ مقدار ضدیخی نیاز نیست (0 لیتر)</strong>`;
+                    
                     summaryHTML += `
                     <div style="background: #ffffff; padding: 18px 25px; border-radius: 12px; margin-bottom: 20px; border: 2px dashed #90a4ae;">
                         <h4 style="margin-top: 0; margin-bottom: 12px; color: #003c5e; font-size: 17px;">🧠 تشریح منطق محاسبات:</h4>
                         <ul style="padding-right: 20px; margin-bottom: 0;">
-                            <li><strong>نیاز شیمیایی:</strong> بیشترین حجم تخلیه برای تنظیم ناخالصی‌ها (pH, TDS, EC) برابر با <strong>${Math.round(max_drain_imp)} لیتر</strong> محاسبه شد.</li>
-                            <li><strong>نیاز غلظتی:</strong> برای رسیدن ضدیخ از ${current_meg}٪ به ${target_meg}٪، مستقلاً نیاز به جابجایی <strong>${Math.round(min_drain_meg)} لیتر</strong> سیال است.</li>
-                            <li><strong>تصمیم‌گیری سیستم:</strong> سیستم مقدار بزرگتر را به عنوان حجم تخلیه نهایی انتخاب می‌کند تا تمام مشکلات همزمان و در یک مرحله حل شوند ➔ <strong>${Math.round(final_drain)} لیتر</strong>.</li>
-                            <li><strong>محاسبه جایگزین:</strong> پس از تخلیه، ${Math.round(remaining_meg_vol)} لیتر ضدیخ در مخزن باقی می‌ماند. چون هدف ما داشتن ${Math.round(target_meg_vol)} لیتر ضدیخ در کل مخزن است، باید اختلاف این دو عدد (<strong>${Math.round(meg_add)} لیتر ضدیخ خالص</strong>) تزریق شود. مابقیِ حجم تخلیه‌شده با <strong>${Math.round(water_add)} لیتر</strong> آب دمین پر می‌شود.</li>
+                            <li><strong>رفع خطاها:</strong> دلایل اصلی نیاز به تخلیه شامل موارد روبرو است: (${drain_reason.join('، ')}).</li>
+                            <li><strong>نیاز غلظتی ضدیخ:</strong> برای تنظیم ضدیخ به تنهایی، جابجایی <strong>${Math.round(min_drain_meg)} لیتر</strong> سیال ضروری بود.</li>
+                            <li><strong>نیاز شیمیایی ناخالصی‌ها:</strong> برای اصلاح پارامترهای شیمیایی به تنهایی، جابجایی <strong>${Math.round(max_drain_imp)} لیتر</strong> سیال ضروری بود.</li>
+                            <li><strong>موازنه نهایی:</strong> سیستم بزرگترین عدد (<strong>${Math.round(final_drain)} لیتر</strong>) را انتخاب می‌کند تا با یک بار تخلیه، هر دو مشکل همزمان حل شوند. سپس با محاسبه دقیق ضدیخِ باقیمانده، ترکیبِ آب و ضدیخِ جایگزین را به شما معرفی می‌کند تا پس از تزریق، کل مخزن دقیقاً روی درصد هدف تنظیم شود.</li>
                         </ul>
                     </div>
 
                     <p style="font-size: 18px; color: #d35400; font-weight: 900 !important; margin-bottom: 10px;">🟠 اقدام عملیاتی (یک‌مرحله‌ای):</p>
                     <div class="step-box">
                         <p style="margin-top: 0; margin-bottom: 8px; font-size: 16px;"><strong>گام 1:</strong> یک‌باره مقدار <strong>${Math.round(final_drain)} لیتر</strong> از سیال مخزن را تخلیه کنید.</p>
-                        <p style="margin-bottom: 0; font-size: 16px;"><strong>گام 2:</strong> ترکیب محاسبه شده شامل <strong>${Math.round(water_add)} لیتر آب دمین</strong> و <strong>${Math.round(meg_add)} لیتر ضدیخ خالص</strong> را مستقیماً درون مخزن بریزید تا پر شود.</p>
+                        <p style="margin-bottom: 0; font-size: 16px;"><strong>گام 2:</strong> ترکیب محاسبه شده شامل <strong>${Math.round(water_add)} لیتر آب دمین</strong> و ${meg_text} را مستقیماً درون مخزن بریزید تا پر شود.</p>
                     </div>`;
                 } else {
                     summaryHTML += `<p style="font-size: 18px; color: #1f5f39; font-weight: 900 !important;">🟢 اقدام نهایی: بدون نیاز به مداخله</p>
