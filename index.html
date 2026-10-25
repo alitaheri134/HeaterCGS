@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پایش و محاسبات پیشرفته گرمکن (IGS-O-CH-055)</title>
+    
+    <!-- فونت پشتیبان آنلاین -->
+   
+
+    <!-- 
+      نکته: اگر می‌خواهید فونت آفلاین (Base64) سایت استانداردها را هم داشته باشید، 
+      تگ <style> اول کد خودتان (که شامل @font-face است) را دقیقاً در همین نقطه کپی کنید.
+    -->
+	
+	
+		<style>
+        @font-face {
+            font-family: 'IRANSansX-Bold';
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Vazirmatn-Regular';
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+	
+
+    <style>
+        /* اعمال فونت و ضخامت (Bold) سراسری دقیقاً مشابه سایت جستجوی استانداردها */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'IRANSansX-Bold', 'Iran Sans X', 'Vazirmatn', 'Vazirmatn-Regular', 'IRANSans', 'Tahoma', sans-serif !important;
+        }
+        
+        body { 
+            font-weight: 700 !important;
+            font-size: 16px;
+            background: #f4f7fa; 
+            padding: 20px; 
+            color: #1e2b3a; 
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        h1 { font-weight: 900 !important; }
+        h2, h3, h4 { font-weight: 800 !important; }
+        
+        button, input, select, div, p, span, li, ul, label, strong {
+            font-weight: 700 !important;
+        }
+
+        .container { 
+            max-width: 1150px; 
+            margin: 0 auto; 
+            background: #fff; 
+            padding: 30px 35px; 
+            border-radius: 24px; 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); 
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 2px solid #e6edf4;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .company-logo {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            border-radius: 16px;
+            background: transparent;
+            padding: 0;
+            box-shadow: none;
+            display: block;
+        }
+        .date-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: #3a6a8e;
+            margin-top: 8px;
+            flex-wrap: wrap;
+            background: #f9fcff;
+            padding: 6px 20px;
+            border-radius: 40px;
+            border: 1px solid #e2ebf3;
+            font-weight: 800 !important;
+        }
+        .date-row .item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .date-row .item .label {
+            font-weight: 700 !important;
+            color: #5f7f9a;
+        }
+        .date-row .item .value {
+            font-weight: 800 !important;
+            color: #003c5e;
+            font-size: 0.9rem;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e6edf4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #7f96aa;
+            font-size: 0.9rem;
+        }
+
+        h1, h2 { text-align: center; color: #003c5e; border-bottom: 3px solid #3498db; padding-bottom: 15px; margin-bottom: 25px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
+        .input-group { background: #f9fcff; padding: 15px; border-radius: 14px; border: 1px solid #e2ebf3; }
+        label { display: block; margin-bottom: 8px; color: #1e2b3a; font-size: 0.95rem; font-weight: 800 !important; }
+        
+        input, select { 
+            width: 100%; 
+            padding: 10px 12px; 
+            border: 1px solid #d0dde9; 
+            border-radius: 10px; 
+            font-size: 15px; 
+            background-color: #fff; 
+            color: #1e2b3a;
+            font-weight: 800 !important;
+            transition: 0.2s;
+        }
+        input:focus, select:focus { outline: none; border-color: #2b7a4b; box-shadow: 0 0 0 3px rgba(43, 122, 75, 0.15); }
+        input::placeholder { color: #a0b8cd; font-weight: 600 !important; }
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
+
+        .btn-container { text-align: center; margin-top: 30px; }
+        button { padding: 14px 28px; border: none; border-radius: 40px; cursor: pointer; font-weight: 800 !important; font-size: 16px; margin: 5px; transition: transform 0.2s, box-shadow 0.2s; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .btn-calc { background: #2b7a4b; color: white; box-shadow: 0 4px 8px rgba(43, 122, 75, 0.25); }
+        .btn-calc:hover { background: #1f5f39; }
+        .btn-print { background: linear-gradient(135deg, #2980b9 0%, #8e44ad 100%); color: white; }
+        .btn-clear { background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); color: white; }
+
+        /* استایل‌های بولد و خوانا برای گزارش خروجی */
+        #results { margin-top: 40px; padding: 25px; border-radius: 18px; display: none; background: #fff; border: 2px solid #e2ebf3; }
+        .result-card { border-radius: 14px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2ebf3; }
+        .alert-card { border-right: 8px solid #d32f2f; background-color: #fff5f5; }
+        .normal-card { border-right: 8px solid #2b7a4b; background-color: #f2fbf5; }
+        
+        .card-header { padding: 15px 20px; font-weight: 900 !important; font-size: 18px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+        .alert-card .card-header { color: #b71c1c; background-color: #ffcdd2; }
+        .normal-card .card-header { color: #1f5f39; background-color: #d5f5e3; }
+        
+        .content-split { display: flex; flex-wrap: wrap; padding: 18px 20px; gap: 15px; align-items: center; }
+        .params-right { flex: 1; min-width: 250px; direction: rtl; text-align: right; padding-left: 20px; border-left: 2px dashed #ef9a9a; font-size: 15.5px; color: #1e2b3a; font-weight: 800 !important; line-height: 1.9; }
+        
+        /* تغییر فونت فرمول‌ها از Courier نازک به فونت اصلی ضخیم و خوانا */
+        .formula-left { flex: 1.5; min-width: 320px; direction: ltr; text-align: left; padding-right: 15px; font-size: 16.5px; font-weight: 800 !important; color: #b71c1c; display: flex; flex-direction: column; justify-content: center; }
+        .formula-line { white-space: nowrap; overflow-x: auto; margin-bottom: 10px; background: #ffffff; padding: 10px 14px; border-radius: 8px; border: 1.5px solid #ef9a9a; font-weight: 800 !important; color: #1e2b3a; }
+        .formula-result { background: #ffebee; border: 2px solid #d32f2f; color: #b71c1c; padding: 10px 16px; border-radius: 8px; display: inline-block; font-weight: 900 !important; font-size: 18px; }
+        
+        .action-footer { padding: 15px 20px; background-color: rgba(211, 47, 47, 0.08); font-weight: 800 !important; font-size: 16px; border-top: 1px solid rgba(211, 47, 47, 0.15); color: #b71c1c; }
+        .normal-card .action-footer { background-color: rgba(46, 204, 113, 0.08); border-top: 1px solid rgba(46, 204, 113, 0.15); color: #1f5f39; }
+        
+        .summary-box { margin-top: 40px; padding: 25px; border-radius: 16px; background: #f0f6fc; border: 2px solid #3498db; box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+        .summary-box h3 { color: #003c5e; text-align: center; border-bottom: 2px solid #c0d8ea; padding-bottom: 12px; margin-bottom: 20px; font-size: 20px; font-weight: 900 !important; }
+        .summary-box p, .summary-box li { font-weight: 800 !important; color: #1e2b3a; font-size: 15.5px; line-height: 1.9; }
+        .step-box { background: #ffffff; padding: 18px; border-radius: 12px; margin-bottom: 15px; border-right: 6px solid #2b7a4b; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        
+        @media (max-width: 900px) { .grid-4 { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 700px) {
+            .container { padding: 18px 15px; }
+            .header-top { flex-direction: column; }
+            .company-logo { max-width: 80%; height: auto; }
+            .date-row { font-size: 0.8rem; gap: 10px; padding: 4px 12px; }
+            .date-row .item .value { font-size: 0.8rem; }
+            .footer { font-size: 0.8rem; }
+            .params-right { border-left: none; border-bottom: 2px dashed #ef9a9a; padding-left: 0; padding-bottom: 15px; }
+        }
+        @media (max-width: 500px) { .grid-4 { grid-template-columns: 1fr; } .grid { grid-template-columns: 1fr; } }
+        @media print {
+            button { display: none; }
+            body { background: white; color: black; }
+            .container { box-shadow: none; border: none; padding: 0; }
+            .result-card { break-inside: avoid; border: 1px solid #ccc; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- هدر -->
+        <header class="header">
+            <div class="header-top">
+                <img id="dynamicLogo" alt="لوگوی شرکت گاز" class="company-logo">
+            </div>
+            <div class="date-row" id="dynamicDate">
+                <span class="item"><span class="label">📅</span><span class="value" id="persianDate">در حال بارگذاری...</span></span>
+                <span class="item"><span class="label">🕌</span><span class="value" id="hijriDate">در حال بارگذاری...</span></span>
+                <span class="item"><span class="label">🌐</span><span class="value" id="gregorianDate">در حال بارگذاری...</span></span>
+                <span class="item"><span class="label">🕒</span><span class="value" id="clockDisplay">در حال بارگذاری...</span></span>
+            </div>
+        </header>
+
+        <div style="background: #f0f6fc; border: 2px solid #c0d8ea; border-right: 6px solid #2b7a4b; border-radius: 12px; padding: 15px; text-align: center; font-size: 20px; font-weight: 900 !important; color: #003c5e; margin-bottom: 25px;">
+            پایش وضعیت محلول هیترهای ایستگاههای تقلیل فشار (IGS-O-CH-055)
+        </div>
+
+        <div class="grid-4">
+            <div class="input-group" style="background: #e8f4f8; border-color: #b3e0f2;">
+                <label style="color: #003c5e; font-size: 15px;">شهرستان:</label>
+                <select id="county_select" onchange="onCountyChange()"></select>
+                <input type="text" id="county_input" placeholder="نام شهرستان جدید..." style="display:none; margin-top:10px;">
+            </div>
+            <div class="input-group" style="background: #e8f4f8; border-color: #b3e0f2;">
+                <label style="color: #003c5e; font-size: 15px;">محل هیتر:</label>
+                <select id="station_select" onchange="onStationChange()"></select>
+                <input type="text" id="station_input" placeholder="نام ایستگاه جدید..." style="display:none; margin-top:10px;">
+            </div>
+            <div class="input-group" style="background: #e8f4f8; border-color: #b3e0f2;">
+                <label style="color: #003c5e; font-size: 15px;">حجم کل مخزن (V) - لیتر:</label>
+                <input type="text" id="vol" placeholder="تایپ کنید..." onkeyup="formatVolume(this)">
+            </div>
+            <div class="input-group" style="background: #fff3e0; border-color: #ffcc80;">
+                <label style="color: #e65100; font-size: 15px;">درصد هدف ضدیخ:</label>
+                <input type="number" id="meg_target" placeholder="پیش‌فرض ۴۰٪" value="40">
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="input-group">
+                <label>1. درصد ضدیخ فعلی (MEG - %):</label>
+                <input type="number" id="meg" placeholder="مجاز: 40 تا 50">
+            </div>
+            <div class="input-group">
+                <label>2. پی‌اچ (pH):</label>
+                <input type="number" step="0.1" id="ph" placeholder="مجاز: 7.5 تا 10.5">
+            </div>
+            <div class="input-group">
+                <label>3. کل جامدات محلول (TDS - ppm):</label>
+                <input type="number" id="tds" placeholder="حداکثر 300">
+            </div>
+            <div class="input-group">
+                <label>4. هدایت الکتریکی (EC - µS/cm):</label>
+                <input type="number" id="ec" placeholder="حداکثر 2000">
+            </div>
+            <div class="input-group">
+                <label>5. آهن کل (Total Iron - mg/l):</label>
+                <input type="number" step="0.1" id="iron" placeholder="حداکثر 3">
+            </div>
+            <div class="input-group">
+                <label>6. یون کلراید (Cl - ppm):</label>
+                <input type="number" step="0.1" id="chloride" placeholder="حداکثر 50">
+            </div>
+            <div class="input-group">
+                <label>7. سختی کل (TH - ppm):</label>
+                <input type="number" step="0.1" id="th" placeholder="حداکثر 30">
+            </div>
+            <div class="input-group">
+                <label>8. نرخ خوردگی (CR - mpy):</label>
+                <input type="number" step="0.1" id="cr" placeholder="کمتر از 5">
+            </div>
+            <div class="input-group">
+                <label>9. خوردگی میکروبی (تعداد):</label>
+                <input type="number" id="microbial" placeholder="کمتر از 1000">
+            </div>
+            <div class="input-group">
+                <label>10. وضعیت سطح سیال:</label>
+                <select id="fluid_level">
+                    <option value="normal">نرمال (روی نشانگر)</option>
+                    <option value="low">پایین‌تر از حد مجاز</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn-calc" onclick="calculateAll()">اجرای آنالیز و محاسبات</button>
+            <button class="btn-clear" onclick="clearFields()">پاک کردن فرم</button>
+            <button class="btn-print" onclick="window.print()">چاپ / ذخیره گزارش</button>
+        </div>
+
+        <div id="results">
+            <h2>گزارش خروجی و فرمول‌های اصلاحی</h2>
+            <div id="reportContainer"></div>
+        </div>
+        
+        <footer class="footer" style="flex-direction: column; gap: 10px;">
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; font-size: 1.1rem; color: #1e2b3a;">
+                <span>👤 تهیه‌کننده: <strong>علی طاهری</strong></span>
+                <span>📱 موبایل: <strong>091318336177</strong></span>
+                <span>☎️ تلفن: <strong>03832282878</strong></span>
+                <span style="display: flex; align-items: center; gap: 6px;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#0088cc" style="vertical-align: middle;">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.022c.24-.213-.054-.334-.373-.122l-6.87 4.326-2.96-.924c-.643-.2-.657-.643.136-.953l11.566-4.458c.538-.196 1.006.128.832.94z"/>
+                    </svg>
+                    <strong>alitaheri@</strong>
+                </span>
+            </div>
+            <span style="color: #1B8B3F; font-size: 0.9rem; margin-top: 5px; font-weight: bold;">
+                اگر لحظه‌ای با دعای خیر و خواندن حمد و سوره، روح پدر و مادر مرحوم بنده و آرمیدگان در خاک را شادکنید، نورش را در قلب خودت حس خواهی کرد.
+            </span>
+        </footer>
+    </div>
+
+    <!-- فراخوانی فایل‌های خارجی (در صورت تغییر نام فایل عکس به assets.js یا assets_3.js، نام زیر را مطابق آن تنظیم کنید) -->
+    <script src="assets.js"></script>
+    <script src="data.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof companyLogoBase64 !== 'undefined') {
+                document.getElementById('dynamicLogo').src = companyLogoBase64;
+            } else {
+                console.warn('فایل لوگو به درستی بارگذاری نشده است.');
+            }
+        });
+
+        const countySel = document.getElementById('county_select');
+        const countyInp = document.getElementById('county_input');
+        const stationSel = document.getElementById('station_select');
+        const stationInp = document.getElementById('station_input');
+        const volInp = document.getElementById('vol');
+
+        function formatVolume(input) {
+            let val = input.value.replace(/,/g, '');
+            if (!isNaN(val) && val !== "") {
+                input.value = Number(val).toLocaleString('en-US');
+            }
+        }
+
+        function populateCounties() {
+            if (typeof heaterData === 'undefined') return;
+            const uniqueCounties = [...new Set(heaterData.map(item => item.county))];
+            let options = '<option value="">-- انتخاب کنید --</option>';
+            uniqueCounties.forEach(c => {
+                options += `<option value="${c}">${c}</option>`;
+            });
+            options += '<option value="OTHER">➕ سایر (تایپ دستی)...</option>';
+            countySel.innerHTML = options;
+        }
+
+        function populateStations(countyFilter) {
+            if (typeof heaterData === 'undefined') return;
+            let options = '<option value="">-- انتخاب کنید --</option>';
+            let filtered = heaterData;
+            if (countyFilter && countyFilter !== "OTHER") {
+                filtered = heaterData.filter(item => item.county === countyFilter);
+            }
+            filtered.forEach(s => {
+                options += `<option value="${s.station}">${s.station}</option>`;
+            });
+            options += '<option value="OTHER">➕ سایر (تایپ دستی)...</option>';
+            stationSel.innerHTML = options;
+        }
+
+        function onCountyChange() {
+            const val = countySel.value;
+            if (val === "OTHER") {
+                countyInp.style.display = 'block';
+                populateStations(""); 
+            } else {
+                countyInp.style.display = 'none';
+                countyInp.value = "";
+                populateStations(val);
+            }
+        }
+
+        function onStationChange() {
+            const val = stationSel.value;
+            if (val === "OTHER") {
+                stationInp.style.display = 'block';
+                volInp.value = "";
+            } else if (val !== "") {
+                stationInp.style.display = 'none';
+                stationInp.value = "";
+                if (typeof heaterData !== 'undefined') {
+                    const found = heaterData.find(item => item.station === val);
+                    if (found) {
+                        if (countySel.value !== found.county) {
+                            countySel.value = found.county;
+                            countyInp.style.display = 'none';
+                            populateStations(found.county);
+                            stationSel.value = found.station; 
+                        }
+                        volInp.value = Number(found.volume).toLocaleString('en-US');
+                    }
+                }
+            }
+        }
+
+        function clearFields() {
+            document.getElementById('meg').value = "";
+            document.getElementById('ph').value = "";
+            document.getElementById('tds').value = "";
+            document.getElementById('ec').value = "";
+            document.getElementById('iron').value = "";
+            document.getElementById('chloride').value = "";
+            document.getElementById('th').value = "";
+            document.getElementById('cr').value = "";
+            document.getElementById('microbial').value = "";
+            document.getElementById('fluid_level').value = "normal";
+            document.getElementById('meg_target').value = "40";
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('reportContainer').innerHTML = "";
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            populateCounties();
+            populateStations("");
+            countySel.value = "کیار";
+            onCountyChange();
+            stationSel.value = "شلمزار";
+            onStationChange();
+        });
+
+        function updateDateTime() {
+            const now = new Date();
+            const persian = (() => {
+                const parts = new Intl.DateTimeFormat('fa-IR', {
+                    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+                }).formatToParts(now);
+                const obj = {};
+                parts.forEach(p => obj[p.type] = p.value);
+                return `${obj.weekday}، ${obj.day} ${obj.month} ${obj.year}`;
+            })();
+            document.getElementById('persianDate').textContent = persian;
+            document.getElementById('hijriDate').textContent = new Intl.DateTimeFormat('ar-SA', {
+                calendar: 'islamic-umalqura', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            }).format(now);
+            document.getElementById('gregorianDate').textContent = new Intl.DateTimeFormat('en-GB', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            }).format(now);
+            document.getElementById('clockDisplay').textContent = new Intl.DateTimeFormat('fa-IR', {
+                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+            }).format(now);
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        function createNormalCard(title, value, unit) {
+            return `<div class="result-card normal-card"><div class="card-header">✔️ ${title}: ${value} ${unit} (در محدوده مجاز)</div></div>`;
+        }
+
+        function createAlertCard(title, value, unit, paramsHtml, formulaHtml, actionText) {
+            return `
+            <div class="result-card alert-card">
+                <div class="card-header">❌ ${title}: ${value} ${unit} (خارج از محدوده مجاز)</div>
+                <div class="content-split">
+                    <div class="params-right"><strong style="color:#b71c1c; font-size:16px;">پارامترها و واحدها:</strong><br>${paramsHtml}</div>
+                    <div class="formula-left">${formulaHtml}</div>
+                </div>
+                <div class="action-footer">محاسبه مستقل: ${actionText}</div>
+            </div>`;
+        }
+
+        function createSimpleAlertCard(title, value, unit, message, actionText) {
+            return `<div class="result-card alert-card"><div class="card-header">❌ ${title}: ${value} ${unit} (${message})</div><div class="action-footer">وضعیت: ${actionText}</div></div>`;
+        }
+
+        function calculateAll() {
+            let county_name = countySel.value === "OTHER" ? countyInp.value : countySel.value;
+            let station_name = stationSel.value === "OTHER" ? stationInp.value : stationSel.value;
+            if(!county_name) county_name = "نامشخص";
+            if(!station_name) station_name = "نامشخص";
+            
+            const v = parseFloat(document.getElementById('vol').value.replace(/,/g, '')) || 0;
+            const target_meg = parseFloat(document.getElementById('meg_target').value) || 40;
+            
+            const rep = document.getElementById('reportContainer');
+            rep.innerHTML = "";
+            document.getElementById('results').style.display = 'block';
+
+            rep.innerHTML += `
+                <div style="text-align:center; margin-bottom:20px; padding:15px; background:#f0f6fc; border:2px solid #c0d8ea; border-radius:12px; color:#003c5e; font-size:18px; font-weight:900 !important;">
+                    شهرستان: ${county_name} &nbsp; | &nbsp; ایستگاه: ${station_name} &nbsp; | &nbsp; حجم مخزن: ${Number(v).toLocaleString('en-US')} لیتر
+                </div>
+            `;
+
+            const getValue = id => { const val = document.getElementById(id).value; return val === "" ? null : parseFloat(val); };
+            
+            const meg = getValue('meg'), ph = getValue('ph'), tds = getValue('tds'), ec = getValue('ec');
+            const iron = getValue('iron'), chloride = getValue('chloride'), th = getValue('th');
+            const cr = getValue('cr'), microbial = getValue('microbial');
+            const fluid_level = document.getElementById('fluid_level').value;
+
+            let hasData = false;
+            let d_ph = 0, d_tds = 0, d_ec = 0, d_meg = 0;
+            let max_drain_imp = 0; 
+            let drain_reason = [];
+            let is_critical = false;
+            let critical_reasons = [];
+
+            // 1. محاسبات مجزای ضدیخ (MEG)
+            if(meg !== null) {
+                hasData = true;
+                if(meg >= 40 && meg <= 50) {
+                    rep.innerHTML += createNormalCard("درصد ضدیخ فعلی (MEG)", meg, "%");
+                } else if (meg < 40) {
+                    d_meg = (v * (target_meg - meg)) / (100 - meg);
+                    let params = `V = ${v} لیتر<br>C<sub>current</sub> = ${meg} %<br>C<sub>target</sub> = ${target_meg} %<br>C<sub>fresh</sub> = 100 %`;
+                    let formula = `
+                        <div class="formula-line">d = V * (C<sub>target</sub> - C<sub>current</sub>) / (100 - C<sub>current</sub>)</div>
+                        <div class="formula-line">d = ${v} * (${target_meg} - ${meg}) / (100 - ${meg})</div>
+                        <div class="formula-result">d = ${Math.round(d_meg)} Liters</div>
+                    `;
+                    rep.innerHTML += createAlertCard("درصد ضدیخ (MEG)", meg, "%", params, formula, `برای تنظیم مستقل ضدیخ، نیاز به تخلیه و تزریق ${Math.round(d_meg)} لیتر ضدیخ خالص است.`);
+                } else {
+                    rep.innerHTML += createSimpleAlertCard("درصد ضدیخ فعلی (MEG)", meg, "%", "بیشتر از 50%", "نیاز به رقیق‌سازی با آب مقطر (حجم در ترکیب نهایی اعمال می‌شود)");
+                }
+            }
+
+            // 2. محاسبات مجزای پی‌اچ (pH)
+            if(ph !== null) {
+                hasData = true;
+                if(ph >= 7.5 && ph <= 10.5) {
+                    rep.innerHTML += createNormalCard("پی‌اچ (pH)", ph, "");
+                } else {
+                    let z = (ph < 7.5) ? 7.5 : 10.5;
+                    let x = 9.5; 
+                    let num = Math.pow(10, -z) - Math.pow(10, -ph);
+                    let den = Math.pow(10, -x) - Math.pow(10, -ph);
+                    if (den !== 0) d_ph = Math.abs(v * (num / den));
+                    if (d_ph > v) d_ph = v;
+                    if (d_ph > max_drain_imp) { max_drain_imp = d_ph; drain_reason.push("تنظیم pH"); }
+
+                    let params = `V = ${v} لیتر<br>y (pH فعلی) = ${ph}<br>z (pH هدف مجاز) = ${z}<br>x (pH محلول تازه) = ${x}`;
+                    let formula = `
+                        <div class="formula-line">d = V * (10<sup>-z</sup> - 10<sup>-y</sup>) / (10<sup>-x</sup> - 10<sup>-y</sup>)</div>
+                        <div class="formula-line">d = ${v} * (10<sup>-${z}</sup> - 10<sup>-${ph}</sup>) / (10<sup>-${x}</sup> - 10<sup>-${ph}</sup>)</div>
+                        <div class="formula-result">d = ${Math.round(d_ph)} Liters</div>
+                    `;
+                    rep.innerHTML += createAlertCard("پی‌اچ (pH)", ph, "", params, formula, `برای اصلاح مستقل pH، نیاز به تخلیه ${Math.round(d_ph)} لیتر است.`);
+                }
+            }
+
+            // 3. محاسبات مجزای جامدات محلول (TDS)
+            if(tds !== null) {
+                hasData = true;
+                if(tds <= 300) {
+                    rep.innerHTML += createNormalCard("جامدات محلول (TDS)", tds, "ppm");
+                } else {
+                    let x = 300; 
+                    let y_prime = 0; 
+                    d_tds = Math.abs(v * ((tds - x) / (tds - y_prime)));
+                    if (d_tds > v) d_tds = v;
+                    if (d_tds > max_drain_imp) { max_drain_imp = d_tds; drain_reason.push("کاهش TDS"); }
+
+                    let params = `V = ${v} لیتر<br>y (TDS فعلی) = ${tds} ppm<br>x (حد مجاز) = ${x} ppm<br>y' (محلول تازه) = ${y_prime} ppm`;
+                    let formula = `
+                        <div class="formula-line">V<sub>1</sub> = V * (y - x) / (y - y')</div>
+                        <div class="formula-line">V<sub>1</sub> = ${v} * (${tds} - ${x}) / (${tds} - ${y_prime})</div>
+                        <div class="formula-result">V<sub>1</sub> = ${Math.round(d_tds)} Liters</div>
+                    `;
+                    rep.innerHTML += createAlertCard("جامدات محلول (TDS)", tds, "ppm", params, formula, `برای اصلاح مستقل TDS، نیاز به تخلیه ${Math.round(d_tds)} لیتر است.`);
+                }
+            }
+
+            // 4. محاسبات مجزای هدایت الکتریکی (EC)
+            if(ec !== null) {
+                hasData = true;
+                if(ec <= 2000) {
+                    rep.innerHTML += createNormalCard("هدایت الکتریکی (EC)", ec, "µS/cm");
+                } else {
+                    let x = 2000; 
+                    let y_prime = 0; 
+                    d_ec = Math.abs(v * ((ec - x) / (ec - y_prime)));
+                    if (d_ec > v) d_ec = v;
+                    if (d_ec > max_drain_imp) { max_drain_imp = d_ec; drain_reason.push("کاهش EC"); }
+
+                    let params = `V = ${v} لیتر<br>y (EC فعلی) = ${ec} µS/cm<br>x (حد مجاز) = ${x} µS/cm<br>y' (محلول تازه) = ${y_prime} µS/cm`;
+                    let formula = `
+                        <div class="formula-line">V<sub>1</sub> = V * (y - x) / (y - y')</div>
+                        <div class="formula-line">V<sub>1</sub> = ${v} * (${ec} - ${x}) / (${ec} - ${y_prime})</div>
+                        <div class="formula-result">V<sub>1</sub> = ${Math.round(d_ec)} Liters</div>
+                    `;
+                    rep.innerHTML += createAlertCard("هدایت الکتریکی (EC)", ec, "µS/cm", params, formula, `برای اصلاح مستقل EC، نیاز به تخلیه ${Math.round(d_ec)} لیتر است.`);
+                }
+            }
+
+            // 5-9. سایر پارامترهای آزمایشگاهی
+            if(iron !== null) { hasData = true;
+                if(iron <= 3) { rep.innerHTML += createNormalCard("آهن کل", iron, "mg/l"); }
+                else { rep.innerHTML += createSimpleAlertCard("آهن کل", iron, "mg/l", "بیشتر از 3", "نشانه خوردگی داخلی مخزن"); is_critical = true; critical_reasons.push("آهن کل بالا"); }
+            }
+            if(chloride !== null) { hasData = true;
+                if(chloride <= 50) { rep.innerHTML += createNormalCard("یون کلراید", chloride, "ppm"); }
+                else { rep.innerHTML += createSimpleAlertCard("یون کلراید", chloride, "ppm", "بیشتر از 50", "عامل شدید خوردگی"); is_critical = true; critical_reasons.push("یون کلراید بالا"); }
+            }
+            if(th !== null) { hasData = true;
+                if(th <= 30) { rep.innerHTML += createNormalCard("سختی کل", th, "ppm"); }
+                else { rep.innerHTML += createSimpleAlertCard("سختی کل", th, "ppm", "بیشتر از 30", "عامل ایجاد رسوب"); is_critical = true; critical_reasons.push("سختی کل بالا"); }
+            }
+            if(cr !== null) { hasData = true;
+                if(cr < 5) rep.innerHTML += createNormalCard("نرخ خوردگی", cr, "mpy");
+                else rep.innerHTML += createSimpleAlertCard("نرخ خوردگی", cr, "mpy", "بیش از 5", "نیاز به بررسی نفوذ اکسیژن و تعویض سیال");
+            }
+            if(microbial !== null) { hasData = true;
+                if(microbial < 1000) { rep.innerHTML += createNormalCard("خوردگی میکروبی", microbial, "تعداد"); }
+                else { rep.innerHTML += createSimpleAlertCard("خوردگی میکروبی", microbial, "تعداد", "بیش از 1000", "نیاز به میکروب‌زدایی و تعویض سیال"); is_critical = true; critical_reasons.push("خوردگی میکروبی"); }
+            }
+            if(fluid_level === 'low') { hasData = true;
+                rep.innerHTML += createSimpleAlertCard("سطح سیال", "پایین", "", "افت در منبع", "کسری سیال با محلول اولیه تأمین شود");
+            } else if (hasData && fluid_level === 'normal') {
+                rep.innerHTML += createNormalCard("سطح سیال", "نرمال", "");
+            }
+
+            // محاسبات یکپارچه
+            let current_meg = meg !== null ? meg : 0;
+            let min_drain_meg = 0;
+            
+            if (current_meg < target_meg) {
+                min_drain_meg = (v * (target_meg - current_meg)) / (100 - current_meg);
+            } else if (current_meg > target_meg) {
+                min_drain_meg = (v * (current_meg - target_meg)) / current_meg;
+                drain_reason.push("رقیق‌سازی ضدیخ");
+            }
+            
+            let final_drain = Math.max(max_drain_imp, min_drain_meg);
+            if (final_drain > v) final_drain = v;
+
+            let remaining_meg_vol = (v - final_drain) * (current_meg / 100);
+            let target_meg_vol = v * (target_meg / 100);
+            
+            let meg_add = target_meg_vol - remaining_meg_vol;
+            let water_add = final_drain - meg_add;
+            
+            if (meg_add < 0) meg_add = 0;
+            if (water_add < 0) water_add = 0;
+
+            if (final_drain > (v * 0.6)) {
+                is_critical = true;
+                critical_reasons.push("نیاز به تخلیه بیش از 60 درصد حجم");
+            }
+
+            // کادر نتیجه‌گیری نهایی با تشریح منطق
+            if (hasData) {
+                let summaryHTML = `<div class="summary-box">
+                    <h3>📋 نتیجه‌گیری نهایی و راهنمای عملیاتی یکپارچه</h3>`;
+
+                if (is_critical) {
+                    summaryHTML += `<p style="font-size: 18px; color: #b71c1c; font-weight: 900 !important; margin-bottom: 10px;">🔴 اقدام نهایی: تعویض کامل سیال</p>
+                    <p style="margin-bottom: 15px;">به دلیل وضعیت بحرانی (<strong>${critical_reasons.join('، ')}</strong>)، محاسبات مقطعی کارایی لازم را ندارد.</p>
+                    <div class="step-box" style="border-right-color: #d32f2f;">
+                        <p style="margin: 0;"><strong>دستورالعمل:</strong> کل سیال مخزن (${Number(v).toLocaleString('en-US')} لیتر) باید به طور کامل تخلیه شده و با محلول استاندارد (شامل <strong>${Math.round(target_meg_vol)} لیتر ضدیخ</strong> و <strong>${Math.round(v - target_meg_vol)} لیتر آب دمین</strong>) جایگزین گردد.</p>
+                    </div>`;
+                    if (microbial !== null && microbial >= 1000) {
+                        summaryHTML += `<p style="color: #b71c1c; background: #ffcdd2; padding: 12px; border-radius: 8px;">⚠️ پیش از شارژ محلول جدید، انجام کامل عملیات میکروب‌زدایی مطابق با پیوست (ت) الزامی است.</p>`;
+                    }
+                } else if (final_drain > 0) {
+                    summaryHTML += `
+                    <div style="background: #ffffff; padding: 18px 25px; border-radius: 12px; margin-bottom: 20px; border: 2px dashed #90a4ae;">
+                        <h4 style="margin-top: 0; margin-bottom: 12px; color: #003c5e; font-size: 17px;">🧠 تشریح منطق محاسبات:</h4>
+                        <ul style="padding-right: 20px; margin-bottom: 0;">
+                            <li><strong>نیاز شیمیایی:</strong> بیشترین حجم تخلیه برای تنظیم ناخالصی‌ها (pH, TDS, EC) برابر با <strong>${Math.round(max_drain_imp)} لیتر</strong> محاسبه شد.</li>
+                            <li><strong>نیاز غلظتی:</strong> برای رسیدن ضدیخ از ${current_meg}٪ به ${target_meg}٪، مستقلاً نیاز به جابجایی <strong>${Math.round(min_drain_meg)} لیتر</strong> سیال است.</li>
+                            <li><strong>تصمیم‌گیری سیستم:</strong> سیستم مقدار بزرگتر را به عنوان حجم تخلیه نهایی انتخاب می‌کند تا تمام مشکلات همزمان و در یک مرحله حل شوند ➔ <strong>${Math.round(final_drain)} لیتر</strong>.</li>
+                            <li><strong>محاسبه جایگزین:</strong> پس از تخلیه، ${Math.round(remaining_meg_vol)} لیتر ضدیخ در مخزن باقی می‌ماند. چون هدف ما داشتن ${Math.round(target_meg_vol)} لیتر ضدیخ در کل مخزن است، باید اختلاف این دو عدد (<strong>${Math.round(meg_add)} لیتر ضدیخ خالص</strong>) تزریق شود. مابقیِ حجم تخلیه‌شده با <strong>${Math.round(water_add)} لیتر</strong> آب دمین پر می‌شود.</li>
+                        </ul>
+                    </div>
+
+                    <p style="font-size: 18px; color: #d35400; font-weight: 900 !important; margin-bottom: 10px;">🟠 اقدام عملیاتی (یک‌مرحله‌ای):</p>
+                    <div class="step-box">
+                        <p style="margin-top: 0; margin-bottom: 8px; font-size: 16px;"><strong>گام 1:</strong> یک‌باره مقدار <strong>${Math.round(final_drain)} لیتر</strong> از سیال مخزن را تخلیه کنید.</p>
+                        <p style="margin-bottom: 0; font-size: 16px;"><strong>گام 2:</strong> ترکیب محاسبه شده شامل <strong>${Math.round(water_add)} لیتر آب دمین</strong> و <strong>${Math.round(meg_add)} لیتر ضدیخ خالص</strong> را مستقیماً درون مخزن بریزید تا پر شود.</p>
+                    </div>`;
+                } else {
+                    summaryHTML += `<p style="font-size: 18px; color: #1f5f39; font-weight: 900 !important;">🟢 اقدام نهایی: بدون نیاز به مداخله</p>
+                    <p>تمامی پارامترهای اندازه‌گیری شده در وضعیت کاملاً استاندارد قرار دارند و سیستم نیاز به هیچ‌گونه تخلیه یا تزریق ندارد.</p>`;
+                }
+
+                summaryHTML += `</div>`;
+                rep.innerHTML += summaryHTML;
+            } else {
+                rep.innerHTML += "<div class='alert-card' style='padding: 20px; font-weight: 900 !important; font-size:18px; color: #b71c1c;'>لطفاً مقادیر آزمون را برای محاسبه وارد کنید.</div>";
+            }
+        }
+    </script>
+</body>
+</html>
