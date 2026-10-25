@@ -6,15 +6,15 @@
     <title>پایش و محاسبات پیشرفته گرمکن (IGS-O-CH-055)</title>
     
     <!-- فونت پشتیبان آنلاین -->
-   
+    
 
     <!-- 
       نکته: اگر می‌خواهید فونت آفلاین (Base64) سایت استانداردها را هم داشته باشید، 
       تگ <style> اول کد خودتان (که شامل @font-face است) را دقیقاً در همین نقطه کپی کنید.
     -->
-	
-	
-		<style>
+    
+    
+        <style>
         @font-face {
             font-family: 'IRANSansX-Bold';
             font-weight: 400;
@@ -26,7 +26,7 @@
             font-style: normal;
         }
     </style>
-	
+    
 
     <style>
         /* اعمال فونت و ضخامت (Bold) سراسری دقیقاً مشابه سایت جستجوی استانداردها */
@@ -245,27 +245,27 @@
         <div class="grid">
             <div class="input-group">
                 <label>1. درصد ضدیخ فعلی (MEG - %):</label>
-                <input type="number" id="meg" placeholder="مجاز: 40 تا 50">
+                <input type="number" id="meg" placeholder="مجاز: 0 تا 50">
             </div>
             <div class="input-group">
                 <label>2. پی‌اچ (pH):</label>
-                <input type="number" step="0.1" id="ph" placeholder="مجاز: 7.5 تا 10.5">
+                <input type="number" step="0.1" id="ph" placeholder="‫مجاز: 7 تا 10.5">
             </div>
             <div class="input-group">
                 <label>3. کل جامدات محلول (TDS - ppm):</label>
-                <input type="number" id="tds" placeholder="حداکثر 300">
+                <input type="number" id="tds" placeholder="حداکثر2000">
             </div>
             <div class="input-group">
                 <label>4. هدایت الکتریکی (EC - µS/cm):</label>
-                <input type="number" id="ec" placeholder="حداکثر 2000">
+                <input type="number" id="ec" placeholder="حداکثر 6000">
             </div>
             <div class="input-group">
                 <label>5. آهن کل (Total Iron - mg/l):</label>
-                <input type="number" step="0.1" id="iron" placeholder="حداکثر 3">
+                <input type="number" step="0.1" id="iron" placeholder="حداکثر0.3">
             </div>
             <div class="input-group">
                 <label>6. یون کلراید (Cl - ppm):</label>
-                <input type="number" step="0.1" id="chloride" placeholder="حداکثر 50">
+                <input type="number" step="0.1" id="chloride" placeholder="حداکثر 300">
             </div>
             <div class="input-group">
                 <label>7. سختی کل (TH - ppm):</label>
@@ -317,7 +317,7 @@
         </footer>
     </div>
 
-    <!-- فراخوانی فایل‌های خارجی (در صورت تغییر نام فایل عکس به assets.js یا assets_3.js، نام زیر را مطابق آن تنظیم کنید) -->
+    <!-- فراخوانی فایل‌های خارجی -->
     <script src="assets.js"></script>
     <script src="data.js"></script>
 
@@ -505,33 +505,54 @@
             let is_critical = false;
             let critical_reasons = [];
 
-            // 1. محاسبات مجزای ضدیخ (MEG)
+           // 1. محاسبات مجزای ضدیخ (MEG) - مبنا: محدوده مجاز (0 تا 50) و مقایسه با مقدار هدف (target_meg)
             if(meg !== null) {
                 hasData = true;
-                if(meg >= 40 && meg <= 50) {
-                    rep.innerHTML += createNormalCard("درصد ضدیخ فعلی (MEG)", meg, "%");
-                } else if (meg < 40) {
-                    d_meg = (v * (target_meg - meg)) / (100 - meg);
-                    let params = `V = ${v} لیتر<br>C<sub>current</sub> = ${meg} %<br>C<sub>target</sub> = ${target_meg} %<br>C<sub>fresh</sub> = 100 %`;
+                // بررسی قرار داشتن در محدوده مجاز استاندارد (0 تا 50 درصد)
+                if(meg >= 0 && meg <= 50) {
+                    // بررسی انطباق با درصد هدف کاربر
+                    if(meg === target_meg) {
+                        rep.innerHTML += createNormalCard("درصد ضدیخ فعلی (MEG)", meg, "% (مطابق با درصد هدف)");
+                    } else if(meg < target_meg) {
+                        // اگر ضدیخ کمتر از مقدار هدف باشد، نیاز به تزریق ضدیخ خالص است
+                        d_meg = (v * (target_meg - meg)) / (100 - meg);
+                        if (d_meg > max_drain_imp) { max_drain_imp = d_meg; drain_reason.push("تنظیم غلظت ضدیخ"); }
+                        
+                        let params = `V = ${v} لیتر<br>C<sub>current</sub> = ${meg} %<br>C<sub>target</sub> (هدف) = ${target_meg} %<br>C<sub>fresh</sub> = 100 %`;
+                        let formula = `
+                            <div class="formula-line">d = V * (C<sub>target</sub> - C<sub>current</sub>) / (100 - C<sub>current</sub>)</div>
+                            <div class="formula-line">d = ${v} * (${target_meg} - ${meg}) / (100 - ${meg})</div>
+                            <div class="formula-result">d = ${Math.round(d_meg)} Liters</div>
+                        `;
+                        rep.innerHTML += createAlertCard("درصد ضدیخ (MEG)", meg, "%", params, formula, `برای رسیدن به درصد ضدیخ هدف (${target_meg}٪)، نیاز به تخلیه و تزریق ${Math.round(d_meg)} لیتر ضدیخ خالص است.`);
+                    } else {
+                        // اگر ضدیخ بالاتر از مقدار هدف بود ولی هنوز زیر 50٪ است
+                        rep.innerHTML += createNormalCard("درصد ضدیخ فعلی (MEG)", meg, "% (بالاتر از هدف ولی در محدوده مجاز استاندارد)");
+                    }
+                } else if (meg < 0) {
+                    rep.innerHTML += createSimpleAlertCard("درصد ضدیخ فعلی (MEG)", meg, "%", "کمتر از 0%", "مقدار نامعتبر است");
+                } else {
+                    // اگر بالاتر از 50 درصد باشد (خارج از محدوده مجاز استاندارد جدول 3)
+                    d_meg = (v * (meg - target_meg)) / meg; 
+                    let params = `V = ${v} لیتر<br>C<sub>current</sub> = ${meg} %<br>C<sub>target</sub> = ${target_meg} %`;
                     let formula = `
-                        <div class="formula-line">d = V * (C<sub>target</sub> - C<sub>current</sub>) / (100 - C<sub>current</sub>)</div>
-                        <div class="formula-line">d = ${v} * (${target_meg} - ${meg}) / (100 - ${meg})</div>
+                        <div class="formula-line">d = V * (C<sub>current</sub> - C<sub>target</sub>) / C<sub>current</sub></div>
+                        <div class="formula-line">d = ${v} * (${meg} - ${target_meg}) / ${meg}</div>
                         <div class="formula-result">d = ${Math.round(d_meg)} Liters</div>
                     `;
-                    rep.innerHTML += createAlertCard("درصد ضدیخ (MEG)", meg, "%", params, formula, `برای تنظیم مستقل ضدیخ، نیاز به تخلیه و تزریق ${Math.round(d_meg)} لیتر ضدیخ خالص است.`);
-                } else {
-                    rep.innerHTML += createSimpleAlertCard("درصد ضدیخ فعلی (MEG)", meg, "%", "بیشتر از 50%", "نیاز به رقیق‌سازی با آب مقطر (حجم در ترکیب نهایی اعمال می‌شود)");
+                    rep.innerHTML += createAlertCard("درصد ضدیخ (MEG)", meg, "% (خارج از حد مجاز استاندارد بالا)", params, formula, `مقدار ضدیخ بالاتر از حد مجاز ۵۰٪ است؛ نیاز به تخلیه ${Math.round(d_meg)} لیتر و رقیق‌سازی با آب دمین است.`);
+                    drain_reason.push("رقیق‌سازی ضدیخ");
                 }
             }
 
-            // 2. محاسبات مجزای پی‌اچ (pH)
+            // 2. محاسبات مجزای پی‌اچ (pH) - رنج مجاز جدید: 7 تا 10.5
             if(ph !== null) {
                 hasData = true;
-                if(ph >= 7.5 && ph <= 10.5) {
+                if(ph >= 7 && ph <= 10.5) {
                     rep.innerHTML += createNormalCard("پی‌اچ (pH)", ph, "");
                 } else {
-                    let z = (ph < 7.5) ? 7.5 : 10.5;
-                    let x = 9.5; 
+                    let z = (ph < 7) ? 7 : 10.5;
+                    let x = 8.75; // میانگین بازه مجاز برای محلول تازه
                     let num = Math.pow(10, -z) - Math.pow(10, -ph);
                     let den = Math.pow(10, -x) - Math.pow(10, -ph);
                     if (den !== 0) d_ph = Math.abs(v * (num / den));
@@ -548,13 +569,13 @@
                 }
             }
 
-            // 3. محاسبات مجزای جامدات محلول (TDS)
+            // 3. محاسبات مجزای جامدات محلول (TDS) - رنج مجاز جدید: حداکثر 2000 ppm
             if(tds !== null) {
                 hasData = true;
-                if(tds <= 300) {
+                if(tds <= 2000) {
                     rep.innerHTML += createNormalCard("جامدات محلول (TDS)", tds, "ppm");
                 } else {
-                    let x = 300; 
+                    let x = 2000; 
                     let y_prime = 0; 
                     d_tds = Math.abs(v * ((tds - x) / (tds - y_prime)));
                     if (d_tds > v) d_tds = v;
@@ -570,13 +591,13 @@
                 }
             }
 
-            // 4. محاسبات مجزای هدایت الکتریکی (EC)
+            // 4. محاسبات مجزای هدایت الکتریکی (EC) - رنج مجاز جدید: حداکثر 6000 µS/cm
             if(ec !== null) {
                 hasData = true;
-                if(ec <= 2000) {
+                if(ec <= 6000) {
                     rep.innerHTML += createNormalCard("هدایت الکتریکی (EC)", ec, "µS/cm");
                 } else {
-                    let x = 2000; 
+                    let x = 6000; 
                     let y_prime = 0; 
                     d_ec = Math.abs(v * ((ec - x) / (ec - y_prime)));
                     if (d_ec > v) d_ec = v;
@@ -592,14 +613,14 @@
                 }
             }
 
-            // 5-9. سایر پارامترهای آزمایشگاهی
+            // 5-9. سایر پارامترها (آهن کل با حد مجاز 0.3 و یون کلراید با حد مجاز 300)
             if(iron !== null) { hasData = true;
-                if(iron <= 3) { rep.innerHTML += createNormalCard("آهن کل", iron, "mg/l"); }
-                else { rep.innerHTML += createSimpleAlertCard("آهن کل", iron, "mg/l", "بیشتر از 3", "نشانه خوردگی داخلی مخزن"); is_critical = true; critical_reasons.push("آهن کل بالا"); }
+                if(iron <= 0.3) { rep.innerHTML += createNormalCard("آهن کل", iron, "mg/l"); }
+                else { rep.innerHTML += createSimpleAlertCard("آهن کل", iron, "mg/l", "بیشتر از 0.3", "نشانه خوردگی داخلی مخزن"); is_critical = true; critical_reasons.push("آهن کل بالا"); }
             }
             if(chloride !== null) { hasData = true;
-                if(chloride <= 50) { rep.innerHTML += createNormalCard("یون کلراید", chloride, "ppm"); }
-                else { rep.innerHTML += createSimpleAlertCard("یون کلراید", chloride, "ppm", "بیشتر از 50", "عامل شدید خوردگی"); is_critical = true; critical_reasons.push("یون کلراید بالا"); }
+                if(chloride <= 300) { rep.innerHTML += createNormalCard("یون کلراید", chloride, "ppm"); }
+                else { rep.innerHTML += createSimpleAlertCard("یون کلراید", chloride, "ppm", "بیشتر از 300", "عامل شدید خوردگی"); is_critical = true; critical_reasons.push("یون کلراید بالا"); }
             }
             if(th !== null) { hasData = true;
                 if(th <= 30) { rep.innerHTML += createNormalCard("سختی کل", th, "ppm"); }
@@ -619,15 +640,17 @@
                 rep.innerHTML += createNormalCard("سطح سیال", "نرمال", "");
             }
 
-            // محاسبات یکپارچه
+        // محاسبات یکپارچه ضدیخ در صورت نیاز به افزودن یا رقیق‌سازی
             let current_meg = meg !== null ? meg : 0;
             let min_drain_meg = 0;
             
             if (current_meg < target_meg) {
                 min_drain_meg = (v * (target_meg - current_meg)) / (100 - current_meg);
-            } else if (current_meg > target_meg) {
+            } else if (current_meg > 50) {
+                // اگر ضدیخ بیشتر از حد مجاز 50% باشد، باید رقیق شود
                 min_drain_meg = (v * (current_meg - target_meg)) / current_meg;
-                drain_reason.push("رقیق‌سازی ضدیخ");
+            } else {
+                min_drain_meg = 0;
             }
             
             let final_drain = Math.max(max_drain_imp, min_drain_meg);
